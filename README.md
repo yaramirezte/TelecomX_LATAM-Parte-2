@@ -128,6 +128,8 @@ El nivel de compromiso contractual reduce significativamente el churn.
 
 🔎 **Antigüedad del Cliente**
 
+ ![Antigüedad del Cliente](visualizaciones/boxplot_antiguedad.png)
+
 Clientes con menor antigüedad muestran mayor probabilidad de cancelar el servicio.
 
 **Insight:**
@@ -136,6 +138,8 @@ El riesgo de churn es más alto en las primeras etapas del ciclo de vida del cli
 ---
 
 🔎 **Cargos Mensuales**
+
+![Distribución de Cargos](visualizaciones/distribucion_cargos.png)
 
 Clientes con cargos mensuales elevados presentan mayor probabilidad de evasión.
 
