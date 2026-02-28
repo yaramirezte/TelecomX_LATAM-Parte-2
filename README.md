@@ -99,7 +99,7 @@ Se analizó la correlación entre las variables y la variable objetivo Evasión.
 
 Por otro lado, las correlaciones negativas más fuertes corresponden a Antiguedad_Meses (-0.35) y Tipo_Contrato_Two year (-0.30), lo que sugiere que la permanencia y los contratos de largo plazo reducen significativamente el riesgo de churn.
 
-Insight:
+**Insight:**
 La cancelación está fuertemente influenciada por factores contractuales y por el tiempo de permanencia del cliente. Asimismo, ciertos segmentos de servicio y métodos de pago presentan mayor propensión al abandono, lo que abre oportunidades para estrategias de retención segmentadas.
 
 🔎 **Tipo de Contrato vs Cancelación**
