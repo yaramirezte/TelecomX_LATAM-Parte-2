@@ -78,6 +78,7 @@ Las variables fueron clasificadas en:
 Se aplicó **One-Hot Encoding** a las variables categóricas.
 
 - Se utilizó escalado (StandardScaler) para modelos sensibles a la escala como:
+  ![Comparación de Distribución Antes y Después del Escalado](visualizaciones/comparacion_escalado.png)
 
   Regresión Logística
 
@@ -116,6 +117,7 @@ El modelo con mejor desempeño en términos de recall para la clase churn fue Ra
 Durante el análisis exploratorio se identificaron patrones clave:
 
 🔎 **Tipo de Contrato vs Cancelación**
+ ![Tipo de Contrato vs Cancelación](visualizaciones/Tipo_Contrato_vs_Evasión.png)
 
 Los clientes con contrato mensual presentan mayor tasa de cancelación en comparación con contratos anuales.
 
