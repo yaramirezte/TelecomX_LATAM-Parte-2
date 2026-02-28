@@ -1,9 +1,18 @@
 # 📞 Telecom X: Predicción de Churn (Parte 2)
 
-Este proyecto tiene como objetivo analizar y predecir la **cancelación de clientes (Churn)** para una empresa de telecomunicaciones. Mediante el uso de Machine Learning, buscamos identificar a los clientes con mayor riesgo de abandonar el servicio para facilitar estrategias de retención proactivas.
+Proyecto de Machine Learning orientado a la predicción de cancelación de clientes (Churn) en una empresa de telecomunicaciones.
 
-## 🎯 Propósito del Análisis
-El objetivo principal es construir modelos predictivos que clasifiquen si un cliente cancelará su servicio (`Evasion = 1`) o no (`Evasion = 0`). Se pone especial énfasis en el **Recall**, ya que para el negocio es fundamental detectar la mayor cantidad de cancelaciones posibles.
+El análisis transforma datos históricos en una herramienta estratégica capaz de identificar clientes con alto riesgo de evasión y apoyar decisiones de retención basadas en datos.
+
+## 🎯 Objetivo del Proyecto
+
+Desarrollar modelos de clasificación que permitan predecir si un cliente cancelará su servicio:
+
+Evasion = 1 → Cliente cancela
+
+Evasion = 0 → Cliente permanece
+
+Dado el contexto de negocio, se prioriza el Recall, ya que es más crítico detectar la mayor cantidad posible de clientes que podrían abandonar el servicio, incluso si esto implica aceptar algunos falsos positivos.
 
 ---
 
@@ -12,64 +21,82 @@ El objetivo principal es construir modelos predictivos que clasifiquen si un cli
 ```
 Telecom-X-Parte-2/
 │
-├── TelecomX_LATAM_parte_2.ipynb   # Cuaderno principal con el análisis y modelado.
-├── data
-│   ├──datos_tratados.csv          # Dataset limpio y procesado
-├── README.md                      # Documentación del proyecto
-│
-└── visualizaciones                # Carpeta con los gráficos generados (boxplot, distribución de clases, etc.).
+├── TelecomX_LATAM_parte_2.ipynb      # Notebook principal (EDA + Modelado)
+├── data/
+│   └── datos_tratados.csv            # Dataset limpio y preprocesado
+├── visualizaciones/                  # Gráficos generados durante el análisis
+└── README.md                         # Documentación del proyecto
 ```
 
 ---
 
 ## 🛠️ Preparación de los Datos
 
-El proceso de ingeniería de datos siguió estas etapas críticas:
+El proceso de preparación incluyó las siguientes etapas:
 
-1.  **Clasificación de Variables:**
-    * **Numéricas:** Antigüedad (meses), Cargos Mensuales, Cargos Totales.
-    * **Categóricas:** Tipo de contrato, método de pago, servicios contratados (Internet, Streaming, etc.).
-2.  **Codificación (Encoding):** Transformación de variables categóricas mediante *One-Hot Encoding* y *Label Encoding* para su compatibilidad con los algoritmos.
-3.  **Normalización/Estandarización:** Se aplicó `StandardScaler` a las variables numéricas para modelos sensibles a la escala (Regresión Logística).
+1️⃣ **Clasificación de Variables:**
+
+- **Numéricas:**
+  - Antiguedad_Meses
+  - Cargos_Mensuales
+  - Cargos_Totales
+    
+- **Categóricas:**
+  - Tipo_Contrato
+  - Tipo_Internet
+  - Metodo_Pago
+  - Servicios adicionales (Soporte, Streaming, Seguridad, etc.
+---
+   
+2️⃣ **Codificación (Encoding):**
+
+Las variables categóricas fueron transformadas mediante:
+- **One-Hot Encoding** (para variables nominales)
+- **Label Encoding** (cuando fue necesario)
+
+Esto permitió que los algoritmos trabajaran correctamente con datos numéricos.
+
+---
+
+3️⃣ **Estandarización**
+
+Se aplicó StandardScaler a las variables numéricas en modelos sensibles a la escala, como la Regresión Logística.
+
    ![Comparación de Distribución Antes y Después del Escalado](visualizaciones/comparacion_escalado.png)
-5.  **División de Datos:** El conjunto se dividió en **70%** entrenamiento y **30%** prueba, manteniendo la proporción original de la variable objetivo mediante estratificación (stratify=y). Esto permitió validar la capacidad de generalización de los modelos y manejar adecuadamente el desbalance de clases.
+
+La estandarización evita que variables con mayor magnitud dominen el modelo.
 
 ---
 
-🤖 **Modelos Implementados**
+4️⃣ **División de Datos**
 
-Se desarrollaron dos modelos con enfoques distintos:
+El dataset fue dividido en:
 
-1.  **Regresión Logística:**
-    * *Justificación:* Modelo basado en probabilidad. Requiere **estandarización** de datos para que las variables de mayor magnitud (como Cargos Totales) no sesguen los coeficientes.
-2.  **Random Forest (Bosques Aleatorios):**
-    * *Justificación:* Modelo basado en árboles de decisión. No requiere normalización, ya que es robusto a la escala de las variables y captura relaciones no lineales.
-      
-### Evaluación de Rendimiento
-Cada modelo fue evaluado mediante:
-* **Exactitud (Accuracy):** Nivel de acierto general.
-* **Recall (Sensibilidad):** Capacidad de encontrar a los clientes que realmente se van.
-* **F1-Score:** Balance entre precisión y recall.
-* **Matriz de Confusión:** Visualización de falsos positivos y falsos negativos.
+- **70% Entrenamiento**
 
-El modelo con mejor desempeño en términos de recall para la clase churn fue Random Forest ajustado, lo que lo convierte en el modelo más adecuado para detectar clientes en riesgo.
+- **30% Prueba**
 
- <img src="visualizaciones/matriz_logistica.png" width="400"> <img src="visualizaciones/matriz_rf.png" width="400">
- 
+Utilizando:
+
+```
+train_test_split(..., stratify=y)
+```
+
+La estratificación garantizó que la proporción de clases se mantuviera constante en ambos conjuntos, lo cual es fundamental debido al desbalance detectado en la variable objetivo.
+
 ---
+## 📊 Análisis Exploratorio de Datos (EDA)
 
-📊 **Análisis Exploratorio (EDA)**
-
-Durante el análisis exploratorio se identificaron patrones clave:
+El EDA permitió identificar patrones clave relacionados con la cancelación.
 
 🔎 **Tipo de Contrato vs Cancelación**
 
  ![Tipo de Contrato vs Cancelación](visualizaciones/Tipo_Contrato_vs_Evasión.png)
 
-Los clientes con contrato mensual presentan mayor tasa de cancelación en comparación con contratos anuales.
+Los clientes con contrato mensual presentan la mayor proporción de cancelación, mientras que los contratos anuales y bianuales muestran tasas considerablemente menores.
 
 **Insight:**
-El nivel de compromiso contractual reduce significativamente el churn.
+El nivel de compromiso contractual actúa como un mecanismo natural de retención. Los clientes con contratos de mayor duración tienen menor probabilidad de churn, lo que sugiere que incentivar la migración a planes anuales puede reducir significativamente la evasión.
 
 ---
 
@@ -77,10 +104,10 @@ El nivel de compromiso contractual reduce significativamente el churn.
 
  ![Antigüedad del Cliente](visualizaciones/boxplot_antiguedad.png)
 
-Clientes con menor antigüedad muestran mayor probabilidad de cancelar el servicio.
+Los clientes con menor antigüedad tienden a cancelar con mayor frecuencia.
 
 **Insight:**
-El riesgo de churn es más alto en las primeras etapas del ciclo de vida del cliente.
+El riesgo de evasión es mayor en las primeras etapas del ciclo de vida del cliente.
 
 ---
 
@@ -88,16 +115,56 @@ El riesgo de churn es más alto en las primeras etapas del ciclo de vida del cli
 
 ![Distribución de Cargos](visualizaciones/distribucion_cargos.png)
 
-Clientes con cargos mensuales elevados presentan mayor probabilidad de evasión.
+Clientes con cargos mensuales más elevados muestran mayor probabilidad de cancelación.
 
 **Insight:**
-La percepción de valor y la estructura de precios influyen en la decisión de cancelación.
+La percepción de valor y la estructura de precios influyen en la decisión de abandono.
 
 ---
 
-📈 **Importancia de Variables**
 
-Según Random Forest, las variables más relevantes fueron:
+## 🤖 **Modelos Implementados**
+
+Se desarrollaron dos modelos principales:
+
+1️⃣  **Regresión Logística:**
+
+- Modelo probabilístico lineal.
+
+- Requiere estandarización.
+
+- Permite interpretar el impacto de cada variable mediante coeficientes.
+  
+2️⃣  **Random Forest (Bosques Aleatorios):**
+
+- Basado en árboles de decisión.
+
+- No requiere normalización.
+
+- Captura relaciones no lineales.
+
+- Robusto ante ruido y multicolinealidad.
+
+---
+      
+## 📈 Evaluación de Modelos
+
+Los modelos fueron evaluados mediante:
+
+- **Accuracy**
+- **Recall**
+- **F1-Score**
+- **Matriz de Confusión**
+
+ <img src="visualizaciones/matriz_logistica.png" width="400"> <img src="visualizaciones/matriz_rf.png" width="400">
+
+El modelo **Random Forest ajustado** obtuvo el mejor desempeño en términos de Recall para la clase churn, por lo que fue seleccionado como el modelo final.
+
+---
+
+## 📈 **Importancia de Variables**
+
+Según Random Forest, las variables más influyentes fueron:
 
 - Antiguedad_Meses
 
@@ -113,39 +180,48 @@ Según Random Forest, las variables más relevantes fueron:
 
 - Seguridad_Online
 
-Estas variables explican gran parte del comportamiento de cancelación.
+Esto confirma que la cancelación está asociada principalmente a:
+
+- Bajo compromiso contractual
+
+- Baja antigüedad
+
+- Factores económicos
+
+- Nivel de integración de servicios
 
 ---
 
-💡 **Principales Conclusiones**
+## 💡 **Conclusiones Estratégicas**
 
-Los principales factores que influyen en la cancelación son:
+Los principales factores que impulsan la cancelación son:
 
-- Baja antigüedad
+- Clientes recientes
 
 - Contratos mensuales
 
 - Altos cargos mensuales
 
-- Baja integración de servicios adicionales
+- Menor contratación de servicios adicionales
 
-El modelo desarrollado permite identificar clientes en riesgo y diseñar estrategias de retención basadas en datos.
+El modelo desarrollado permite anticipar el churn y constituye una herramienta clave para diseñar estrategias de retención basadas en datos.
 
 ---
 
-🚀 **Estrategias Propuestas**
+## 🚀 **Estrategias Propuestas**
 
 - Programas de fidelización en los primeros meses.
 
 - Incentivos para migrar a contratos anuales.
 
-- Planes personalizados para clientes con alto gasto.
+- Planes personalizados para clientes de alto riesgo.
 
-- Promoción de servicios complementarios para aumentar integración.
-
+- Promoción de servicios complementarios para aumentar retención.
+  
 ---
 
-⚙️ **Instrucciones para Ejecutar el Proyecto**
+## ⚙️ **Cómo Ejecutar el Proyecto**
+
 1️⃣ **Clonar el repositorio**
 
 ```
@@ -170,7 +246,7 @@ Asegurarse de que el archivo datos_tratados.csv esté en la misma carpeta del no
 
 ---
 
-📌 **Librerías Utilizadas**
+## 📌 **Librerías Utilizadas**
 
 - pandas
 
@@ -182,10 +258,8 @@ Asegurarse de que el archivo datos_tratados.csv esté en la misma carpeta del no
 
 - scikit-learn
 
-
-
 ---
 
-🏆 **Resultado Final**
+## 🏆 **Resultado Final**
 
 Este proyecto demuestra cómo el análisis de datos y el Machine Learning pueden utilizarse para anticipar la cancelación de clientes y apoyar decisiones estratégicas en el negocio de telecomunicaciones.
