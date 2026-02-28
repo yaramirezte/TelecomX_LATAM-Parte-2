@@ -1,21 +1,9 @@
-📊 Telecom X – Parte 2
+# 📞 Telecom X: Predicción de Churn (Parte 2)
 
-Predicción de Cancelación de Clientes (Churn)
----
+Este proyecto tiene como objetivo analizar y predecir la **cancelación de clientes (Churn)** para una empresa de telecomunicaciones. Mediante el uso de Machine Learning, buscamos identificar a los clientes con mayor riesgo de abandonar el servicio para facilitar estrategias de retención proactivas.
 
-🎯 **Propósito del Proyecto**
-
-El objetivo principal de este análisis es **predecir la cancelación (churn) de clientes** en Telecom X utilizando técnicas de Machine Learning.
-
-A través del análisis exploratorio de datos (EDA) y la implementación de modelos de clasificación, se busca:
-
-- Identificar los factores que más influyen en la cancelación.
-
-- Construir modelos predictivos capaces de anticipar clientes en riesgo.
-
-- Proponer estrategias de retención basadas en evidencia analítica.
-
-Este proyecto permite transformar datos históricos en una herramienta estratégica para la toma de decisiones empresariales.
+## 🎯 Propósito del Análisis
+El objetivo principal es construir modelos predictivos que clasifiquen si un cliente cancelará su servicio (`Evasion = 1`) o no (`Evasion = 0`). Se pone especial énfasis en el **Recall**, ya que para el negocio es fundamental detectar la mayor cantidad de cancelaciones posibles.
 
 ---
 
@@ -24,92 +12,50 @@ Este proyecto permite transformar datos históricos en una herramienta estratég
 ```
 Telecom-X-Parte-2/
 │
-├── TelecomX_LATAM_parte_2.ipynb   # Notebook principal
+├── TelecomX_LATAM_parte_2.ipynb   # Cuaderno principal con el análisis y modelado.
 ├── data
 │   ├──datos_tratados.csv          # Dataset limpio y procesado
 ├── README.md                      # Documentación del proyecto
 │
-└── visualizaciones                # Carpeta con gráficos exportados
+└── visualizaciones                # Carpeta con los gráficos generados (boxplot, distribución de clases, etc.).
 ```
 
 ---
 
-🧹 **Preparación de los Datos**
-1️⃣ Clasificación de Variables
+## 🛠️ Preparación de los Datos
 
-Las variables fueron clasificadas en:
+El proceso de ingeniería de datos siguió estas etapas críticas:
 
-**Variables categóricas:**
-
-- Tipo_Contrato
-
-- Tipo_Internet
-
-- Factura_Digital
-
-- Soporte_Tecnico
-
-- Seguridad_Online
-
-- Genero
-
-- Tiene_Pareja
-
-- Tiene_Dependientes
-
-- etc.
-
-**Variables numéricas:**
-
-- Antiguedad_Meses
-
-- Cargos_Mensuales
-
-- Cargos_Totales
-
-- Cargos_Diarios
-
-- Cantidad_Servicios
-
----
-
-2️⃣ **Codificación y Normalización**
-
-Se aplicó **One-Hot Encoding** a las variables categóricas.
-
-- Se utilizó escalado (StandardScaler) para modelos sensibles a la escala como:
-  ![Comparación de Distribución Antes y Después del Escalado](visualizaciones/comparacion_escalado.png)
-
-  Regresión Logística
-
-- Random Forest no requirió escalado.
-
----
-
-3️⃣ **División de Datos**
-
-El dataset fue dividido en:
-
-- Conjunto de entrenamiento
-
-- Conjunto de prueba
-
-Esto permitió evaluar la capacidad de generalización de los modelos y evitar sobreajuste.
-
-Además, se aplicaron técnicas de balanceo en el conjunto de entrenamiento para manejar el desbalance de clases.
+1.  **Clasificación de Variables:**
+    * **Numéricas:** Antigüedad (meses), Cargos Mensuales, Cargos Totales.
+    * **Categóricas:** Tipo de contrato, método de pago, servicios contratados (Internet, Streaming, etc.).
+2.  **Codificación (Encoding):** Transformación de variables categóricas mediante *One-Hot Encoding* y *Label Encoding* para su compatibilidad con los algoritmos.
+3.  **Normalización/Estandarización:** Se aplicó `StandardScaler` a las variables numéricas para modelos sensibles a la escala (Regresión Logística).
+   ![Comparación de Distribución Antes y Después del Escalado](visualizaciones/comparacion_escalado.png)
+5.  **División de Datos:** El conjunto se dividió en **70%** entrenamiento y **30%** prueba, manteniendo la proporción original de la variable objetivo mediante estratificación (stratify=y). Esto permitió validar la capacidad de generalización de los modelos y manejar adecuadamente el desbalance de clases.
 
 ---
 
 🤖 **Modelos Implementados**
 
-Se entrenaron los siguientes modelos:
+Se desarrollaron dos modelos con enfoques distintos:
 
-- Regresión Logística
-
-- Random Forest
+1.  **Regresión Logística:**
+    * *Justificación:* Modelo basado en probabilidad. Requiere **estandarización** de datos para que las variables de mayor magnitud (como Cargos Totales) no sesguen los coeficientes.
+2.  **Random Forest (Bosques Aleatorios):**
+    * *Justificación:* Modelo basado en árboles de decisión. No requiere normalización, ya que es robusto a la escala de las variables y captura relaciones no lineales.
+      
+### Evaluación de Rendimiento
+Cada modelo fue evaluado mediante:
+* **Exactitud (Accuracy):** Nivel de acierto general.
+* **Recall (Sensibilidad):** Capacidad de encontrar a los clientes que realmente se van.
+* **F1-Score:** Balance entre precisión y recall.
+* **Matriz de Confusión:** Visualización de falsos positivos y falsos negativos.
 
 El modelo con mejor desempeño en términos de recall para la clase churn fue Random Forest ajustado, lo que lo convierte en el modelo más adecuado para detectar clientes en riesgo.
 
+ <img src="visualizaciones/matriz_logistica.png" width="400"> <img src="visualizaciones/matriz_rf.png" width="400">
+ 
 ---
 
 📊 **Análisis Exploratorio (EDA)**
@@ -117,6 +63,7 @@ El modelo con mejor desempeño en términos de recall para la clase churn fue Ra
 Durante el análisis exploratorio se identificaron patrones clave:
 
 🔎 **Tipo de Contrato vs Cancelación**
+
  ![Tipo de Contrato vs Cancelación](visualizaciones/Tipo_Contrato_vs_Evasión.png)
 
 Los clientes con contrato mensual presentan mayor tasa de cancelación en comparación con contratos anuales.
