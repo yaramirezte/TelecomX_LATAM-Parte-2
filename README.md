@@ -89,6 +89,19 @@ La estratificación garantizó que la proporción de clases se mantuviera consta
 
 El EDA permitió identificar patrones clave relacionados con la cancelación.
 
+Los siguientes análisis visuales evidencian las principales variables asociadas al churn:
+
+🔎 **Análisis de Correlación**
+
+![Análisis de Correlación](visualizaciones/Correlación_variables_con_Evasion.png)
+
+Se analizó la correlación entre las variables y la variable objetivo Evasión. Las variables con mayor correlación positiva fueron Tipo_Internet_Fiber optic (0.30) y Metodo_Pago_Electronic check (0.30), lo que indica que los clientes con estos atributos presentan mayor probabilidad de cancelación.
+
+Por otro lado, las correlaciones negativas más fuertes corresponden a Antiguedad_Meses (-0.35) y Tipo_Contrato_Two year (-0.30), lo que sugiere que la permanencia y los contratos de largo plazo reducen significativamente el riesgo de churn.
+
+Insight:
+La cancelación está fuertemente influenciada por factores contractuales y por el tiempo de permanencia del cliente. Asimismo, ciertos segmentos de servicio y métodos de pago presentan mayor propensión al abandono, lo que abre oportunidades para estrategias de retención segmentadas.
+
 🔎 **Tipo de Contrato vs Cancelación**
 
  ![Tipo de Contrato vs Cancelación](visualizaciones/Tipo_Contrato_vs_Evasión.png)
