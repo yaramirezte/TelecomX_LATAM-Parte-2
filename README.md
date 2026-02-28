@@ -91,7 +91,7 @@ El EDA permitió identificar patrones clave relacionados con la cancelación.
 
 Los siguientes análisis visuales evidencian las principales variables asociadas al churn:
 
-🔎 **Análisis de Correlación**
+### 🔎 **Análisis de Correlación**
 
 ![Análisis de Correlación](visualizaciones/Correlación_variables_con_Evasion.png)
 
@@ -102,7 +102,7 @@ Por otro lado, las correlaciones negativas más fuertes corresponden a Antigueda
 **Insight:**
 La cancelación está fuertemente influenciada por factores contractuales y por el tiempo de permanencia del cliente. Asimismo, ciertos segmentos de servicio y métodos de pago presentan mayor propensión al abandono, lo que abre oportunidades para estrategias de retención segmentadas.
 
-🔎 **Tipo de Contrato vs Cancelación**
+### 🔎 **Tipo de Contrato vs Cancelación**
 
  ![Tipo de Contrato vs Cancelación](visualizaciones/Tipo_Contrato_vs_Evasión.png)
 
@@ -113,7 +113,7 @@ El nivel de compromiso contractual actúa como un mecanismo natural de retenció
 
 ---
 
-🔎 **Antigüedad del Cliente**
+### 🔎 **Antigüedad del Cliente**
 
  ![Antigüedad del Cliente](visualizaciones/boxplot_antiguedad.png)
 
@@ -124,7 +124,7 @@ El riesgo de evasión es mayor en las primeras etapas del ciclo de vida del clie
 
 ---
 
-🔎 **Cargos Mensuales**
+### 🔎 **Cargos Mensuales**
 
 ![Distribución de Cargos](visualizaciones/distribucion_cargos.png)
 
